@@ -32,12 +32,6 @@ export class StandbyScannerController {
                 </div>
 
                 <div class="w-full max-w-lg bg-white rounded-3xl shadow-xl shadow-slate-900/5 border border-slate-200/80 p-5 sm:p-8 text-center">
-                    <!-- Badge status kamera -->
-                    <div id="scanner-badge" class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-xs font-semibold mb-4">
-                        <span id="scanner-dot" class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
-                        <span id="scanner-badge-text">Menyiapkan kamera...</span>
-                    </div>
-
                     <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#0F2D6B]">
                         STANDBY SCAN
                     </h2>
@@ -74,18 +68,14 @@ export class StandbyScannerController {
                         </div>
                     </div>
 
-                    <p id="scanner-status-text" class="mt-4 text-xs sm:text-sm font-medium text-slate-500">
-                        Menghubungkan ke kamera perangkat...
-                    </p>
-
-                    <!-- Tombol aksi -->
-                    <div class="mt-6 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3">
+                    <!-- Tombol aksi sejajar ke samping -->
+                    <div class="mt-6 grid grid-cols-2 gap-2.5 sm:gap-3">
                         <button
                             type="button"
                             id="btn-switch-camera"
-                            class="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-white hover:bg-slate-50 active:scale-[0.98] text-slate-700 border border-slate-300 shadow-2xs text-sm font-semibold transition cursor-pointer"
+                            class="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2.5 rounded-xl bg-white hover:bg-slate-50 active:scale-[0.98] text-slate-700 border border-slate-300 shadow-2xs text-xs sm:text-sm font-semibold whitespace-nowrap transition cursor-pointer"
                         >
-                            <svg class="w-4 h-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <svg class="w-4 h-4 shrink-0 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
                             </svg>
                             <span>Tukar Kamera</span>
@@ -94,9 +84,9 @@ export class StandbyScannerController {
                         <button
                             type="button"
                             id="btn-simulate-vote"
-                            class="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-blue-700 hover:bg-blue-800 active:scale-[0.98] text-white shadow-md shadow-blue-700/20 text-sm font-semibold transition cursor-pointer"
+                            class="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-2.5 rounded-xl bg-blue-700 hover:bg-blue-800 active:scale-[0.98] text-white shadow-md shadow-blue-700/20 text-xs sm:text-sm font-semibold whitespace-nowrap transition cursor-pointer"
                         >
-                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <svg class="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 013.75 9.375v-4.5zM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 01-1.125-1.125v-4.5zM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0113.5 9.375v-4.5z" />
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 6.75h.75v.75h-.75v-.75zM6.75 16.5h.75v.75h-.75v-.75zM16.5 6.75h.75v.75h-.75v-.75zM13.5 13.5h.75v.75h-.75v-.75zM13.5 19.5h.75v.75h-.75v-.75zM19.5 13.5h.75v.75h-.75v-.75zM19.5 19.5h.75v.75h-.75v-.75zM16.5 16.5h.75v.75h-.75v-.75z" />
                             </svg>
@@ -139,28 +129,11 @@ export class StandbyScannerController {
         await this.start();
     }
 
-    updateUIState({ badgeText, statusText, active = false, fallbackTitle = '', fallbackDesc = '' }) {
-        const badge = document.getElementById('scanner-badge');
-        const dot = document.getElementById('scanner-dot');
-        const badgeEl = document.getElementById('scanner-badge-text');
-        const statusEl = document.getElementById('scanner-status-text');
+    updateUIState({ active = false, fallbackTitle = '', fallbackDesc = '' }) {
         const fallbackEl = document.getElementById('scanner-fallback');
         const fallbackTitleEl = document.getElementById('scanner-fallback-title');
         const fallbackDescEl = document.getElementById('scanner-fallback-desc');
         const laserEl = document.getElementById('scan-laser');
-
-        if (badgeEl) badgeEl.textContent = badgeText;
-        if (statusEl) statusEl.textContent = statusText;
-
-        if (badge && dot) {
-            if (active) {
-                badge.className = 'inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-semibold mb-4';
-                dot.className = 'w-2 h-2 rounded-full bg-emerald-500 animate-pulse';
-            } else {
-                badge.className = 'inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-600 text-xs font-semibold mb-4';
-                dot.className = 'w-2 h-2 rounded-full bg-amber-500';
-            }
-        }
 
         if (fallbackEl) {
             fallbackEl.classList.toggle('hidden', active);
@@ -191,8 +164,6 @@ export class StandbyScannerController {
             if (this.cameras.length === 0) {
                 this.updateUIState({
                     active: false,
-                    badgeText: 'Kamera Tidak Ditemukan',
-                    statusText: 'Kamera tidak terdeteksi. Gunakan tombol Simulasi Memilih.',
                     fallbackTitle: 'Kamera Tidak Tersedia',
                     fallbackDesc: 'Tidak ada kamera terdeteksi. Klik Simulasi Memilih untuk melanjutkan.',
                 });
@@ -215,10 +186,6 @@ export class StandbyScannerController {
             const isPermissionErr = /permission|denied|notallowed/i.test(String(err));
             this.updateUIState({
                 active: false,
-                badgeText: isPermissionErr ? 'Izin Kamera Ditolak' : 'Kamera Tidak Aktif',
-                statusText: isPermissionErr
-                    ? 'Akses kamera ditolak. Izinkan kamera atau tekan Simulasi Memilih.'
-                    : 'Kamera belum siap. Gunakan tombol Simulasi Memilih untuk uji coba.',
                 fallbackTitle: isPermissionErr ? 'Akses Kamera Ditolak' : 'Kamera Tidak Dapat Dibuka',
                 fallbackDesc: 'Pastikan izin kamera aktif atau gunakan tombol Simulasi Memilih di bawah.',
             });
@@ -252,13 +219,9 @@ export class StandbyScannerController {
         );
 
         this.isRunning = true;
-        const activeCam = this.cameras[this.currentCameraIndex];
-        const camLabel = activeCam?.label ? ` (${activeCam.label.split('(')[0].trim()})` : '';
 
         this.updateUIState({
             active: true,
-            badgeText: 'Kamera Aktif • Siap Memindai',
-            statusText: `Kamera aktif${camLabel}. Arahkan ke QR Code.`,
         });
     }
 
@@ -280,8 +243,6 @@ export class StandbyScannerController {
             this.currentCameraIndex = (this.currentCameraIndex + 1) % this.cameras.length;
             this.updateUIState({
                 active: false,
-                badgeText: 'Mengganti Kamera...',
-                statusText: 'Memindahkan ke kamera berikutnya...',
                 fallbackTitle: 'Mengganti Kamera...',
                 fallbackDesc: 'Mohon tunggu sebentar.',
             });
@@ -290,8 +251,6 @@ export class StandbyScannerController {
         } catch {
             this.updateUIState({
                 active: false,
-                badgeText: 'Gagal Tukar Kamera',
-                statusText: 'Gagal mengganti kamera. Silakan coba lagi atau gunakan Simulasi Memilih.',
                 fallbackTitle: 'Gagal Membuka Kamera',
                 fallbackDesc: 'Gunakan kamera lain atau klik Simulasi Memilih.',
             });
