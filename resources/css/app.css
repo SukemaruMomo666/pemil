@@ -1,0 +1,89 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../js/**/*.js';
+
+@theme {
+    --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+@keyframes scan-beam {
+    0%, 100% {
+        transform: translateY(0%);
+        opacity: 0.75;
+    }
+    50% {
+        transform: translateY(230px);
+        opacity: 1;
+    }
+}
+
+@keyframes print-receipt {
+    0% {
+        transform: translateY(-92%);
+        opacity: 0.25;
+    }
+    100% {
+        transform: translateY(0%);
+        opacity: 1;
+    }
+}
+
+@keyframes modal-pop {
+    0% {
+        opacity: 0;
+        transform: scale(0.94) translateY(8px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes fade-up {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-scan-beam {
+    animation: scan-beam 2.4s ease-in-out infinite;
+}
+
+.animate-print-receipt {
+    animation: print-receipt 0.85s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.animate-modal-pop {
+    animation: modal-pop 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-fade-up {
+    animation: fade-up 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Override html5-qrcode inner video styling so it fills our custom viewfinder cleanly */
+#qr-reader video {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    border-radius: 1rem !important;
+}
+
+#qr-reader__scan_region {
+    min-height: 100% !important;
+}
+
+#qr-reader__dashboard,
+#qr-reader img[alt="Info icon"],
+#qr-shaded-region {
+    display: none !important;
+}
